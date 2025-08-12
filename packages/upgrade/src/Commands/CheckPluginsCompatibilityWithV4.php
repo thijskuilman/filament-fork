@@ -182,6 +182,7 @@ class CheckPluginsCompatibilityWithV4 extends Command
 
             // Check if the package requires filament/filament
             $requires = $composer['require'] ?? [];
+
             return isset($requires['filament/filament']);
 
         } catch (Exception $e) {
