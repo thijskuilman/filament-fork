@@ -2,6 +2,7 @@
 
 namespace Filament\Upgrade\Commands;
 
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
@@ -25,8 +26,9 @@ class CheckPluginsCompatibilityWithV4 extends Command
     {
         $composerPath = base_path('composer.json');
 
-        if (!file_exists($composerPath)) {
+        if (! file_exists($composerPath)) {
             $this->error('composer.json not found.');
+
             return 1;
         }
 
@@ -40,7 +42,7 @@ class CheckPluginsCompatibilityWithV4 extends Command
             return $this->packageRequiresFilament($package);
         });
 
-        $this->info("Found " . $filamentPlugins->count() . " packages that require filament/filament");
+        $this->info('Found ' . $filamentPlugins->count() . ' packages that require filament/filament');
 
         $results = [];
 
@@ -75,7 +77,7 @@ class CheckPluginsCompatibilityWithV4 extends Command
     /**
      * Checks on Packagist whether the given package has any version compatible with Filament v4.
      *
-     * @param string $package The full package name (e.g. vendor/package)
+     * @param  string  $package  The full package name (e.g. vendor/package)
      * @return array|null Array with version string and isPrerelease flag, or null if not found
      */
     protected function checkFilamentV4Compatibility(string $package): ?array
@@ -87,7 +89,7 @@ class CheckPluginsCompatibilityWithV4 extends Command
         if ($compatibleVersion !== null) {
             return [
                 'version' => $compatibleVersion,
-                'isPrerelease' => false
+                'isPrerelease' => false,
             ];
         }
 
@@ -98,7 +100,7 @@ class CheckPluginsCompatibilityWithV4 extends Command
         if ($compatibleVersion !== null) {
             return [
                 'version' => $compatibleVersion,
-                'isPrerelease' => true
+                'isPrerelease' => true,
             ];
         }
 
@@ -107,9 +109,9 @@ class CheckPluginsCompatibilityWithV4 extends Command
 
     /**
      * Checks a specific package URL for Filament v4 compatibility
-     * 
-     * @param string $package The full package name
-     * @param string $url The Packagist API URL to check
+     *
+     * @param  string  $package  The full package name
+     * @param  string  $url  The Packagist API URL to check
      * @return string|null The compatible version string or null if not found
      */
     protected function checkPackageCompatibility(string $package, string $url): ?string
@@ -117,7 +119,7 @@ class CheckPluginsCompatibilityWithV4 extends Command
         try {
             $response = Http::get($url);
 
-            if (!$response->ok()) {
+            if (! $response->ok()) {
                 return null;
             }
 
@@ -137,7 +139,7 @@ class CheckPluginsCompatibilityWithV4 extends Command
                 }
             }
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->error("Error checking {$package} at {$url}: " . $e->getMessage());
         }
 
@@ -147,7 +149,7 @@ class CheckPluginsCompatibilityWithV4 extends Command
     /**
      * Checks if a package requires filament/filament
      *
-     * @param string $package The full package name
+     * @param  string  $package  The full package name
      * @return bool True if the package requires filament/filament
      */
     protected function packageRequiresFilament(string $package): bool
@@ -197,7 +199,7 @@ class CheckPluginsCompatibilityWithV4 extends Command
                     }
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->error("Error checking if {$package} requires filament/filament: " . $e->getMessage());
         }
 
