@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
 #[AsCommand(name: 'filament:check-plugins-compatibility-with-v4')]
-class CheckFilamentCompat extends Command
+class CheckPluginsCompatibilityWithV4 extends Command
 {
     /**
      * The name and signature of the console command.
