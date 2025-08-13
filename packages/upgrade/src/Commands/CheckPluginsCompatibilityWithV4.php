@@ -79,7 +79,7 @@ class CheckPluginsCompatibilityWithV4 extends Command
      * Checks on Packagist whether the given package has any version compatible with Filament v4.
      *
      * @param  string  $package  The full package name (e.g. vendor/package)
-     * @return array|null Array with version string and isPrerelease flag, or null if not found
+     * @return array{version:string,isPrerelease:bool}|null Array with version string and isPrerelease flag, or null if not found
      */
     protected function checkFilamentV4Compatibility(string $package): ?array
     {
