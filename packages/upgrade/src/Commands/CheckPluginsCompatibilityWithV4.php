@@ -162,7 +162,7 @@ class CheckPluginsCompatibilityWithV4 extends Command
 
         // Skip filament/* packages as they're part of the Filament ecosystem
         if (str_starts_with($package, 'filament/')) {
-            return true;
+            return false;
         }
 
         try {
