@@ -53,6 +53,8 @@ render(<<<HTML
     </p>
 HTML);
 
+include __DIR__ . '/../src/check-plugins-compatibility-with-v4.php';
+
 $rectorScriptPath = implode(DIRECTORY_SEPARATOR, ['vendor', 'bin', 'rector']);
 
 foreach (explode(',', $directories) as $directory) {
