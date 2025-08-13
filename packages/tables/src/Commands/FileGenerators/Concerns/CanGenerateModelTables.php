@@ -217,12 +217,14 @@ trait CanGenerateModelTables
 
         return implode(PHP_EOL . '        ', $columns);
     }
-    public function outputQueryBody(?string $model = null): string {
-        if(blank($model)) {
-            return "";
+
+    public function outputQueryBody(?string $model = null): string
+    {
+        if (blank($model)) {
+            return '';
         }
 
-        return (string) new  Literal(<<<PHP
+        return (string) new Literal(<<<PHP
         fn (): {$this->simplifyFqn(Builder::class)} => {$this->simplifyFqn($model)}::query()
         PHP);
     }

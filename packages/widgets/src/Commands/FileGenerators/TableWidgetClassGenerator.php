@@ -44,7 +44,7 @@ class TableWidgetClassGenerator extends ClassGenerator
             Table::class,
             ...($this->hasPartialImports() ? ['Filament\Tables'] : []),
             Builder::class,
-            ...(blank($this->getModelFqn()) ? [] : [$this->getModelFqn()]) ,
+            ...(blank($this->getModelFqn()) ? [] : [$this->getModelFqn()]),
         ];
     }
 
