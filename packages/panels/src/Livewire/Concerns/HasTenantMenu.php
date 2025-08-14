@@ -18,10 +18,6 @@ trait HasTenantMenu
             return;
         }
 
-        if (! Filament::hasTenantMenu()) {
-            return;
-        }
-
         $this->tenantMenuItems = Filament::getTenantMenuItems();
 
         foreach ($this->tenantMenuItems as $action) {
@@ -36,11 +32,6 @@ trait HasTenantMenu
      */
     protected function getTenantMenuItems(): array
     {
-        if (! isset($this->tenantMenuItems)) {
-            // If tenant menu items are not set, fetch them from Filament
-            $this->tenantMenuItems = Filament::getTenantMenuItems();
-        }
-
         return $this->tenantMenuItems;
     }
 }
