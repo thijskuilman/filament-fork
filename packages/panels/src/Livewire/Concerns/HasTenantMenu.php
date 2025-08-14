@@ -10,7 +10,7 @@ trait HasTenantMenu
     /**
      * @var array<Action>
      */
-    protected ?array $tenantMenuItems = null;
+    protected array $tenantMenuItems = [];
 
     public function bootHasTenantMenu(): void
     {
