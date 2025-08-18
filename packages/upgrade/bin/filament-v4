@@ -165,9 +165,11 @@ try {
             $stableVersions = $shared['versions'][$plugin]['stable'] ?? [];
             foreach ($stableVersions as $checkingVersion) {
                 $requires = $checkingVersion['require'] ?? [];
-                if (isset($requires['filament/filament'])) {
-                    $constraint = $requires['filament/filament'];
-                    if (preg_match("/\^4\.|~4\.|>=4\./", $constraint)) {
+                foreach ($requires as $dep => $constraint) {
+                    if (!str_starts_with($dep, 'filament/')) {
+                        continue;
+                    }
+                    if (preg_match("/\^\s*4(?:\.|$)|~\s*4(?:\.|$)|>=\s*4(?:\.|$)/", (string) $constraint)) {
                         $compatibility = [
                             'version' => (string) ($checkingVersion['version'] ?? ''),
                             'isPrerelease' => false,
@@ -183,10 +185,12 @@ try {
                 foreach ($devVersions as $checkingVersion) {
                     $requires = $checkingVersion['require'] ?? [];
 
-                    if (isset($requires['filament/filament'])) {
-                        $constraint = $requires['filament/filament'];
+                    foreach ($requires as $dep => $constraint) {
+                        if (!str_starts_with($dep, 'filament/')) {
+                            continue;
+                        }
 
-                        if (preg_match("/\^4\.|~4\.|>=4\./", $constraint)) {
+                        if (preg_match("/\^\s*4(?:\.|$)|~\s*4(?:\.|$)|>=\s*4(?:\.|$)/", (string) $constraint)) {
                             $compatibility = [
                                 'version' => (string) ($checkingVersion['version'] ?? ''),
                                 'isPrerelease' => true,
@@ -212,10 +216,12 @@ try {
                     foreach ($versions as $checkingVersion) {
                         $requires = $checkingVersion['require'] ?? [];
 
-                        if (isset($requires['filament/filament'])) {
-                            $constraint = $requires['filament/filament'];
+                        foreach ($requires as $dep => $constraint) {
+                            if (!str_starts_with($dep, 'filament/')) {
+                                continue;
+                            }
 
-                            if (preg_match("/\^4\.|~4\.|>=4\./", $constraint)) {
+                            if (preg_match("/\^\s*4(?:\.|$)|~\s*4(?:\.|$)|>=\s*4(?:\.|$)/", (string) $constraint)) {
                                 $compatibility = [
                                     'version' => (string) ($checkingVersion['version'] ?? ''),
                                     'isPrerelease' => false,
@@ -239,10 +245,12 @@ try {
                         foreach ($devVersions as $checkingVersion) {
                             $requires = $checkingVersion['require'] ?? [];
 
-                            if (isset($requires['filament/filament'])) {
-                                $constraint = $requires['filament/filament'];
+                            foreach ($requires as $dep => $constraint) {
+                                if (!str_starts_with($dep, 'filament/')) {
+                                    continue;
+                                }
 
-                                if (preg_match("/\^4\.|~4\.|>=4\./", $constraint)) {
+                                if (preg_match("/\^\s*4(?:\.|$)|~\s*4(?:\.|$)|>=\s*4(?:\.|$)/", (string) $constraint)) {
                                     $compatibility = [
                                         'version' => (string) ($checkingVersion['version'] ?? ''),
                                         'isPrerelease' => true,

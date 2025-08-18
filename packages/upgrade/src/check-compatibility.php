@@ -85,7 +85,7 @@ $plugins = array_filter($allPackages, function ($plugin) {
 
         return false;
     } catch (Exception $exception) {
-        render("<p class=\"text-red\">Error checking if {$plugin} requires filament/filament: " . $exception->getMessage() . '</p>');
+        render("<p class=\"text-red\">Error checking if {$plugin} requires a filament/* package: " . $exception->getMessage() . '</p>');
     }
 
     return false;
@@ -126,10 +126,12 @@ foreach ($plugins as $plugin) {
             foreach ($versions as $checkingVersion) {
                 $requires = $checkingVersion['require'] ?? [];
 
-                if (isset($requires['filament/filament'])) {
-                    $constraint = $requires['filament/filament'];
+                foreach ($requires as $dep => $constraint) {
+                    if (! str_starts_with($dep, 'filament/')) {
+                        continue;
+                    }
 
-                    if (preg_match("/\^4\.|~4\.|>=4\./", $constraint)) {
+                    if (preg_match("/\^\s*4(?:\.|$)|~\s*4(?:\.|$)|>=\s*4(?:\.|$)/", (string) $constraint)) {
                         $compatibility = [
                             'version' => $checkingVersion['version'],
                             'isPrerelease' => false,
@@ -160,10 +162,12 @@ foreach ($plugins as $plugin) {
             foreach ($devVersions as $checkingVersion) {
                 $requires = $checkingVersion['require'] ?? [];
 
-                if (isset($requires['filament/filament'])) {
-                    $constraint = $requires['filament/filament'];
+                foreach ($requires as $dep => $constraint) {
+                    if (! str_starts_with($dep, 'filament/')) {
+                        continue;
+                    }
 
-                    if (preg_match("/\^4\.|~4\.|>=4\./", $constraint)) {
+                    if (preg_match("/\^\s*4(?:\.|$)|~\s*4(?:\.|$)|>=\s*4(?:\.|$)/", (string) $constraint)) {
                         $compatibility = [
                             'version' => $checkingVersion['version'],
                             'isPrerelease' => true,
