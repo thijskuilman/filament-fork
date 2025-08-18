@@ -167,8 +167,16 @@
             <script>
                 const errorNotifications = @js($this->getErrorNotifications())
 
+                let hasPageExpiredError = false
+
                 Livewire.hook('request', ({ fail }) => {
                     fail(({ status, preventDefault }) => {
+                        if ((status === 419) && hasPageExpiredError) {
+                            return
+                        }
+
+                        hasPageExpiredError = status === 419
+
                         preventDefault()
 
                         const errorNotification =
