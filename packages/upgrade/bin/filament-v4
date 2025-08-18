@@ -268,8 +268,21 @@ try {
 
             $constraint = null;
             if (! $isPrerelease) {
-                if (preg_match('/^(\d+)/', $version, $m)) {
-                    $major = $m[1];
+                // Prefer using major.minor for pre-v1 packages to avoid ^0.0 or ~0.0
+                if (preg_match('/^(\d+)\.(\d+)/', $version, $m)) {
+                    $major = (int) $m[1];
+                    $minor = (int) $m[2];
+
+                    if ($major === 0) {
+                        // For 0.x.y, constrain to the minor series, e.g. ^0.12 or ~0.12
+                        $constraint = $isWindows ? "~0.{$minor}" : "^0.{$minor}";
+                    } else {
+                        // For 1.x and above, stick to major series, e.g. ^4.0 or ~4.0
+                        $constraint = $isWindows ? "~{$major}.0" : "^{$major}.0";
+                    }
+                } elseif (preg_match('/^(\d+)/', $version, $m)) {
+                    // Fallback: if only a major could be parsed
+                    $major = (int) $m[1];
                     $constraint = $isWindows ? "~{$major}.0" : "^{$major}.0";
                 }
             }
