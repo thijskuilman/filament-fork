@@ -41,6 +41,8 @@ render(<<<'HTML'
     </div>
 HTML);
 
+require __DIR__ . '/../src/check-compatibility.php';
+
 $directories = $argv[1] ?? ask(<<<HTML
     <span class="bg-amber-600 text-amber-50 mr-1">
         Please provide a comma-separated list of directories to process breaking changes in (e.g. app, app-modules, src):
@@ -52,8 +54,6 @@ render(<<<HTML
         Starting upgrade...
     </p>
 HTML);
-
-include __DIR__ . '/../src/check-plugins-compatibility-with-v4.php';
 
 $rectorScriptPath = implode(DIRECTORY_SEPARATOR, ['vendor', 'bin', 'rector']);
 
