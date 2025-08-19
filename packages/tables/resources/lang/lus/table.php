@@ -32,7 +32,7 @@ return [
 
             'no_search_results_message' => 'I search hi a awmlo.',
 
-            'placeholder' => 'Options ho thlang rawh...',
+            'placeholder' => 'Options ho thlang rawh',
 
             'searching_message' => 'Searching...',
 
