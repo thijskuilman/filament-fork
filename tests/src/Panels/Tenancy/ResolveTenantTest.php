@@ -58,15 +58,5 @@ it('resolves the tenant with custom path correctly from the route', function ():
     Filament::setCurrentPanel($panel);
     Filament::setTenant($team);
 
-    $routeName = 'filament.tenancy.resources.posts.index';
-    $route = Route::getRoutes()->getByName($routeName);
-
-    $request = Request::create(route($routeName, [
-        'tenant' => $team,
-    ]));
-
-    $request->setRouteResolver(fn () => $route->bind($request));
-
-    $resolvedTenant = $panel->getTenant($team->getKey());
-    expect($resolvedTenant)->toBeSameModel($team);
+    expect(Filament::getUrl($team))->toBe('http://localhost/tenancy/1');
 });
