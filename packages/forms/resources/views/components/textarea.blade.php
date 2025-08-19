@@ -67,7 +67,7 @@
                             'id' => $getId(),
                             'maxlength' => (! $isConcealed) ? $getMaxLength() : null,
                             'minlength' => (! $isConcealed) ? $getMinLength() : null,
-                            'placeholder' => $getPlaceholder(),
+                            'placeholder' => ($getPlaceholder() === null) ? null : e((string) $getPlaceholder()),
                             'readonly' => $isReadOnly(),
                             'required' => $isRequired() && (! $isConcealed),
                             'rows' => $rows,
