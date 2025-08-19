@@ -42,7 +42,7 @@ const findClosestLivewireComponent = (el) => {
 }
 
 document.addEventListener('alpine:init', () => {
-    window.Alpine.data('filamentSchema', ({livewireId}) => ({
+    window.Alpine.data('filamentSchema', ({ livewireId }) => ({
         handleFormValidationError(event) {
             if (event.detail.livewireId !== livewireId) {
                 return
@@ -78,7 +78,7 @@ document.addEventListener('alpine:init', () => {
 
     window.Alpine.data(
         'filamentSchemaComponent',
-        ({path, containerPath, isLive, $wire}) => ({
+        ({ path, containerPath, isLive, $wire  }) => ({
             $statePath: path,
             $get: (path, isAbsolute) => {
                 return $wire.$get(
@@ -102,8 +102,8 @@ document.addEventListener('alpine:init', () => {
 
     window.Alpine.data('filamentActionsSchemaComponent', actions)
 
-    Livewire.hook('commit', ({component, commit, respond, succeed, fail}) => {
-        succeed(({snapshot, effects}) => {
+    Livewire.hook('commit', ({ component, commit, respond, succeed, fail }) => {
+        succeed(({ snapshot, effects }) => {
             effects.dispatches?.forEach((dispatch) => {
                 if (!dispatch.params?.awaitSchemaComponent) {
                     return
@@ -132,7 +132,7 @@ document.addEventListener('alpine:init', () => {
                             }),
                         )
                     },
-                    {once: true},
+                    { once: true },
                 )
             })
         })
