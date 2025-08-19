@@ -578,7 +578,7 @@ return [
 
         'no_search_results_message' => 'I thilzawn hi a awmlo.',
 
-        'placeholder' => 'Options ho thlang rawh',
+        'placeholder' => 'Option thlang rawh',
 
         'searching_message' => 'Searching...',
 
