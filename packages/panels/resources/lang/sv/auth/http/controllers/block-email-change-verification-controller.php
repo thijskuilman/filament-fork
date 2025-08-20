@@ -10,8 +10,7 @@ return [
         ],
 
         'failed' => [
-            'title' =>
-                'Misslyckades att blockera ändring av mejladress',
+            'title' => 'Misslyckades att blockera ändring av mejladress',
             'body' => 'Tyvärr kunde du inte förhindra att mejladressen ändrades till :email, eftersom den redan verifierades innan du blockerade den. Om du inte gjorde den ursprungliga begäran, vänligen kontakta oss omedelbart.',
         ],
 
