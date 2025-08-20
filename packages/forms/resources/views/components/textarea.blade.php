@@ -5,6 +5,7 @@
     $isConcealed = $isConcealed();
     $isDisabled = $isDisabled();
     $rows = $getRows();
+    $placeholder = $getPlaceholder();
     $shouldAutosize = $shouldAutosize();
     $placeholder = $getPlaceholder();
     $statePath = $getStatePath();
