@@ -981,7 +981,7 @@
                                                         {{ $recordGroupLabel }}:
                                                 @endif
 
-                                                {{ $recordGroupTitle }}
+                                                {!! $recordGroupTitle !!}
                                             </{{ $secondLevelHeadingTag }}>
 
                                             @if (filled($recordGroupDescription = $group->getDescription($record, $recordGroupTitle)))
@@ -1693,7 +1693,7 @@
                                                                             {{ $recordGroupLabel }}:
                                                                     @endif
 
-                                                                    {{ $recordGroupTitle }}
+                                                                    {!! $recordGroupTitle !!}
                                                                 </{{ $secondLevelHeadingTag }}>
 
                                                                 @if (filled($recordGroupDescription = $group->getDescription($record, $recordGroupTitle)))

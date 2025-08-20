@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Arr;
+use Illuminate\Support\HtmlString;
 
 class Group extends Component
 {
@@ -271,6 +272,10 @@ class Group extends Component
 
         if ($title instanceof LabelInterface) {
             $title = $title->getLabel();
+        }
+
+        if ($title instanceof HtmlString) {
+            return $title->toHtml();
         }
 
         if (filled($title) && $this->isDate()) {
