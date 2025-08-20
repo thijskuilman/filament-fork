@@ -18,7 +18,6 @@
     $suffixLabel = $getSuffixLabel();
     $statePath = $getStatePath();
     $placeholder = $getPlaceholder();
-    $placeholder = $getPlaceholder();
 @endphp
 
 <x-dynamic-component

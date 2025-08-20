@@ -8,7 +8,6 @@
     $shouldAutosize = $shouldAutosize();
     $placeholder = $getPlaceholder();
     $statePath = $getStatePath();
-    $placeholder = $getPlaceholder();
 
     $initialHeight = (($rows ?? 2) * 1.5) + 0.75;
 @endphp
