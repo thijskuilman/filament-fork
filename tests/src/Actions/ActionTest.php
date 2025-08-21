@@ -136,7 +136,6 @@ it('can mount an action record with arguments', function (): void {
     livewire(Actions::class)
         ->mountAction([
             TestAction::make('record-arguments')->arguments(['key' => 123]),
-            'record-arguments',
         ])
         ->callMountedAction()
         ->assertDispatched('record-arguments-called', arguments: [

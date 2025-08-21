@@ -48,7 +48,11 @@ class Actions extends Page
                         }),
                 ]),
             Action::make('record-arguments')
-                ->record(fn (array $arguments) => $arguments['key']),
+                ->record(fn (array $arguments) => $arguments['key'])
+                ->resolveRecordUsing(fn () => null)
+                ->action(function (array $arguments): void {
+                    $this->dispatch('record-arguments-called', arguments: $arguments);
+                }),
             Action::make('parent')
                 ->schema([
                     TextInput::make('foo')
