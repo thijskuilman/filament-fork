@@ -23,7 +23,7 @@ const validateFile = (file, allowedMimeTypes, maxFileSize, invalidMimeTypeMessag
         errors.push(invalidMimeTypeMessage || defaultInvalidMimeTypeMessage)
     }
     
-    if (file.size > maxFileSize) {
+    if (file.size > +maxFileSize * 1024) {
         errors.push(fileSizeExceededMessage || defaultFileSizeExceededMessage)
     }
     
