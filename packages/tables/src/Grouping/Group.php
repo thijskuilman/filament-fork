@@ -251,7 +251,7 @@ class Group extends Component
         return Arr::get($record, $this->getColumn());
     }
 
-    public function getTitle(Model $record): string|HtmlString
+    public function getTitle(Model $record): string | HtmlString
     {
         $column = $this->getColumn();
 
@@ -276,7 +276,7 @@ class Group extends Component
         }
 
         // Ensure the title is either a string or HtmlString for security
-        if (!is_string($title) && !($title instanceof HtmlString)) {
+        if (! is_string($title) && ! ($title instanceof HtmlString)) {
             throw new InvalidArgumentException(
                 'Group title must be a string or HtmlString instance. ' .
                 'Use Illuminate\Support\HtmlString for HTML content.'
