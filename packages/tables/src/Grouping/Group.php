@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\HtmlString;
-use Illuminate\Support\Str;
 
 class Group extends Component
 {
@@ -45,8 +44,6 @@ class Group extends Component
     protected bool $isTitlePrefixedWithLabel = true;
 
     protected bool $isDate = false;
-
-    protected bool | Closure $isHtml = false;
 
     protected string $evaluationIdentifier = 'group';
 
@@ -80,13 +77,6 @@ class Group extends Component
     public function date(bool $condition = true): static
     {
         $this->isDate = $condition;
-
-        return $this;
-    }
-
-    public function html(bool | Closure $condition = true): static
-    {
-        $this->isHtml = $condition;
 
         return $this;
     }
@@ -288,10 +278,6 @@ class Group extends Component
             return $title;
         }
 
-        if ($this->isHtml()) {
-            $title = Str::sanitizeHtml($title);
-        }
-
         if (filled($title) && $this->isDate()) {
             if (! ($title instanceof CarbonInterface)) {
                 $title = Carbon::parse($title);
@@ -300,7 +286,7 @@ class Group extends Component
             $title = $title->translatedFormat($this->getTable()->getDefaultDateDisplayFormat());
         }
 
-        return $this->isHtml() ? new HtmlString($title) : $title;
+        return $title;
     }
 
     public function groupQuery(Builder $query, Model $model): Builder
@@ -475,11 +461,6 @@ class Group extends Component
     public function isDate(): bool
     {
         return $this->isDate;
-    }
-
-    public function isHtml(): bool
-    {
-        return (bool) $this->evaluate($this->isHtml);
     }
 
     public function applyEagerLoading(EloquentBuilder $query): EloquentBuilder
