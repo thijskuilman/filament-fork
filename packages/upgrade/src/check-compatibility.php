@@ -1,5 +1,6 @@
 <?php
 
+use function Laravel\Prompts\confirm;
 use function Termwind\render;
 
 render('<p class="text-blue font-bold">Checking PHP version compatibility with v4...</p>');
@@ -199,11 +200,21 @@ if ($incompatiblePlugins) {
     render("<p class=\"text-red\">{$pluginList}</p>");
     render('<p>You could temporarily remove them from your composer.json file until they\'ve been upgraded, replace them with a similar plugin that is compatible with v4, wait for the plugins to be upgraded before upgrading your app, or even write PRs to help the authors upgrade them.</p>');
 
-    render(<<<'HTML'
-        <p class="bg-red-600 text-red-50 mt-1">
-            <strong>Upgrade aborted because of incompatible plugins</strong>
-        </p>
-    HTML);
+    $continue = confirm(
+        label: 'Do you want to continue even though there are incompatible plugins?',
+        default: false,
+        yes: 'Continue anyway',
+        no: 'Abort upgrade',
+        hint: 'You\'ll need to manually remove / fix the listed plugins.',
+    );
 
-    exit(1);
+    if (!$continue) {
+        render(<<<'HTML'
+            <p class="bg-red-600 text-red-50 mt-1">
+                <strong>Upgrade aborted because of incompatible plugins</strong>
+            </p>
+        HTML);
+
+        exit(1);
+    }
 }
