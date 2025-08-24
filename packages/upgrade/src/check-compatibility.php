@@ -208,7 +208,7 @@ if ($incompatiblePlugins) {
         hint: 'You\'ll need to manually remove / fix the listed plugins.',
     );
 
-    if (!$continue) {
+    if (! $continue) {
         render(<<<'HTML'
             <p class="bg-red-600 text-red-50 mt-1">
                 <strong>Upgrade aborted because of incompatible plugins</strong>
