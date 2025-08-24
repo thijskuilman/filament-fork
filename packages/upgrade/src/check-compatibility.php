@@ -203,8 +203,8 @@ if ($incompatiblePlugins) {
     $continue = confirm(
         label: 'Do you want to continue even though there are incompatible plugins?',
         default: false,
-        yes: 'Continue anyway',
-        no: 'Abort upgrade',
+        yes: 'Yes - Continue anyway',
+        no: 'No - Abort upgrade',
         hint: 'You\'ll need to manually remove / fix the listed plugins.',
     );
 
