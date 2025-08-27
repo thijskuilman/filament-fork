@@ -83,7 +83,11 @@ class RichContentRenderer implements Htmlable
      */
     protected array $cachedMergeTagValues = [];
 
-    protected ?Closure $nodeProcessor = null;
+    /**
+     * @var array<Closure>
+     */
+    protected array $nodeProcessors = [];
+
 
     /**
      * @param  string | array<string, mixed> | null  $content
@@ -240,18 +244,20 @@ class RichContentRenderer implements Htmlable
 
     public function processNodesUsing(Closure $callback): static
     {
-        $this->nodeProcessor = $callback;
+        $this->nodeProcessors[] = $callback;
 
         return $this;
     }
 
     protected function processNodes(Editor $editor): void
     {
-        if (blank($this->nodeProcessor)) {
+        if (empty($this->nodeProcessors)) {
             return;
         }
 
-        $editor->descendants($this->nodeProcessor);
+        foreach ($this->nodeProcessors as $processor) {
+            $editor->descendants($processor);
+        }
     }
 
     /**
