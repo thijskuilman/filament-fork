@@ -51,12 +51,6 @@ export class Select {
         statePath = null,
         onStateChange = () => {},
     }) {
-        if (Array.isArray(state)) {
-            state = state.map((item) => item.toString())
-        } else if (state !== null) {
-            state = state.toString()
-        }
-
         this.element = element
         this.options = options
         this.originalOptions = JSON.parse(JSON.stringify(options)) // Keep a copy of original options
@@ -606,7 +600,7 @@ export class Select {
                 }
 
                 // If not found, add to missing values
-                missingValues.push(value)
+                missingValues.push(value.toString())
             }
         }
 
