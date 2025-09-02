@@ -353,7 +353,7 @@ class RichContentRenderer implements Htmlable
     public function toText(): string
     {
         $editor = $this->getEditor();
-        
+
         $this->processMergeTags($editor);
 
         return $editor->getText();
