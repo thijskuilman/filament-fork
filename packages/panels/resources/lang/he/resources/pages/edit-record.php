@@ -2,7 +2,7 @@
 
 return [
 
-    'title' => 'ערוך :label',
+    'title' => 'עריכת :label',
 
     'breadcrumb' => 'עריכה',
 

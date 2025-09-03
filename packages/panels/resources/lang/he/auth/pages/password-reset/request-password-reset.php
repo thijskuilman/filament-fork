@@ -23,7 +23,7 @@ return [
         'actions' => [
 
             'request' => [
-                'label' => 'שלח אימייל',
+                'label' => 'שלח דוא"ל',
             ],
 
         ],

@@ -27,7 +27,7 @@ return [
 
         'notification_resend_throttled' => [
             'title' => 'יותר מדי נסיונות של שליחה מחדש',
-            'body' => 'אנא נסה שוב בעוד  :seconds שניות.',
+            'body' => 'אנא נסה שוב בעוד :seconds שניות.',
         ],
 
     ],
