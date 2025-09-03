@@ -109,7 +109,7 @@ trait HasComponents
                 if (filled($componentNestedContainerKey)) {
                     $childSchemaName = $childSchema->getKey(isAbsolute: false);
                     if (filled($childSchemaName) && str($componentNestedContainerKey)->contains("{$childSchemaName}.")) {
-                        $nestedKeySegment = (string)str($componentNestedContainerKey)->after("{$childSchemaName}.");
+                        $nestedKeySegment = (string) str($componentNestedContainerKey)->after("{$childSchemaName}.");
                     }
                 }
 
