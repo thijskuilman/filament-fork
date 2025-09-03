@@ -595,8 +595,8 @@ return [
         'actions' => [
 
             'copy' => [
-                'label' => 'Copy',
-                'message' => 'Copied',
+                'label' => 'Kopiëren',
+                'message' => 'Gekopieerd',
             ],
 
             'hide_password' => [
