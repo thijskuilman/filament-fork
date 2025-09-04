@@ -5,6 +5,10 @@ export default Image.extend({
         return {
             ...this.parent?.(),
 
+            class: {
+                default: null,
+            },
+
             id: {
                 default: null,
                 parseHTML: (element) => element.getAttribute('data-id'),

@@ -106,11 +106,16 @@ const LocalFilesPlugin = ({
 
                                 editor
                                     .chain()
-                                    .updateAttributes('image', {
-                                        class: null,
-                                        id: fileKey,
-                                        src: url,
-                                    })
+                                    .insertContentAt(
+                                        { from: position?.pos ?? 0, to: (position?.pos ?? 0) + 1 },
+                                        {
+                                            type: 'image',
+                                            attrs: {
+                                                id: fileKey,
+                                                src: url,
+                                            },
+                                        },
+                                    )
                                     .run()
 
                                 editor.setEditable(true)
@@ -213,11 +218,16 @@ const LocalFilesPlugin = ({
 
                                 editor
                                     .chain()
-                                    .updateAttributes('image', {
-                                        class: null,
-                                        id: fileKey,
-                                        src: url,
-                                    })
+                                    .insertContentAt(
+                                        { from: editor.state.selection.anchor - 1, to: editor.state.selection.anchor },
+                                        {
+                                            type: 'image',
+                                            attrs: {
+                                                id: fileKey,
+                                                src: url,
+                                            },
+                                        },
+                                    )
                                     .run()
 
                                 editor.setEditable(true)
