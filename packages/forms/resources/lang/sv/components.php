@@ -469,10 +469,6 @@ return [
 
         ],
 
-        'messages' => [
-            'uploading_file' => 'Laddar upp fil...',
-        ],
-
         'no_merge_tag_search_results_message' => 'Kunde inte matcha mallvariabler.',
 
         'tools' => [
@@ -518,6 +514,8 @@ return [
             'underline' => 'Understruken',
             'undo' => 'Ångra',
         ],
+
+        'uploading_file_message' => 'Laddar upp fil...',
 
     ],
 
