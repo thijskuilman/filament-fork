@@ -48,7 +48,7 @@ trait CanFormatState
         return $this;
     }
 
-    public function money(string | BackedEnum |  Closure | null $currency = null, int $divideBy = 0, string | BackedEnum | Closure | null $locale = null, int | Closure | null $decimalPlaces = null): static
+    public function money(string | BackedEnum | Closure | null $currency = null, int $divideBy = 0, string | BackedEnum | Closure | null $locale = null, int | Closure | null $decimalPlaces = null): static
     {
         $this->formatStateUsing(static function ($state, Summarizer $summarizer) use ($currency, $divideBy, $locale, $decimalPlaces): ?string {
             if (blank($state)) {
