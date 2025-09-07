@@ -19,10 +19,10 @@
 <x-filament-panels::layout.base
     :livewire="$livewire"
     @class([
-        'fi-body-has-topbar' => $hasTopbar,
         'fi-body-has-navigation' => $hasNavigation,
         'fi-body-has-sidebar-collapsible-on-desktop' => $isSidebarCollapsibleOnDesktop,
         'fi-body-has-sidebar-fully-collapsible-on-desktop' => $isSidebarFullyCollapsibleOnDesktop,
+        'fi-body-has-topbar' => $hasTopbar,
         'fi-body-has-top-navigation' => $hasTopNavigation,
     ])
 >

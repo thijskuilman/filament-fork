@@ -8,7 +8,7 @@ html.fi {
     &.fi-body-has-sidebar-collapsible-on-desktop,
     &.fi-body-has-sidebar-fully-collapsible-on-desktop {
         & .fi-main-ctn {
-            @apply opacity-0 transition-all min-h-[calc(100vh-4rem)];
+            @apply min-h-[calc(100vh-4rem)] opacity-0 transition-all;
         }
     }
 
@@ -29,8 +29,7 @@ html.fi {
         }
     }
 
-    &:not(.fi-body-has-topbar)
-    {
+    &:not(.fi-body-has-topbar) {
         & .fi-main-ctn {
             @apply flex min-h-screen;
         }
