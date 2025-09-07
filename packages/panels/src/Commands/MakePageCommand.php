@@ -41,6 +41,7 @@ use ReflectionClass;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
+use Throwable;
 
 use function Laravel\Prompts\confirm;
 use function Laravel\Prompts\info;
@@ -555,12 +556,17 @@ class MakePageCommand extends Command
 
                 $resourceModelFqn = $this->resourceFqn::getModel();
 
-                if (
-                    class_exists($resourceModelFqn) &&
-                    method_exists($resourceModelFqn, $relationship) &&
-                    (($relationshipInstance = app($resourceModelFqn)->{$relationship}()) instanceof Relation)
-                ) {
-                    return $relatedModelFqn = $relationshipInstance->getRelated()::class;
+                try {
+                    if (
+                        class_exists($resourceModelFqn) &&
+                        method_exists($resourceModelFqn, $relationship) &&
+                        (($relationshipInstance = app($resourceModelFqn)->{$relationship}()) instanceof Relation) &&
+                        class_exists($relatedModel = $relationshipInstance->getRelated()::class)
+                    ) {
+                        return $relatedModelFqn = $relatedModel;
+                    }
+                } catch (Throwable) {
+                    //
                 }
 
                 return $relatedModelFqn = $this->askForRelatedModel($relationship);
@@ -639,19 +645,40 @@ class MakePageCommand extends Command
                         default: false,
                     );
 
-                $relationshipType = select(
-                    label: 'What type of relationship is this?',
-                    options: [
-                        HasMany::class => 'HasMany',
-                        BelongsToMany::class => 'BelongsToMany',
-                        MorphMany::class => 'MorphMany',
-                        MorphToMany::class => 'MorphToMany',
-                        'other' => 'Other',
-                    ],
-                );
+                try {
+                    $resourceModelFqn = $this->resourceFqn::getModel();
 
-                if ($relationshipType === 'other') {
-                    $relationshipType = null;
+                    if (
+                        class_exists($resourceModelFqn) &&
+                        method_exists($resourceModelFqn, $relationship) &&
+                        (($relationshipInstance = app($resourceModelFqn)->{$relationship}()) instanceof Relation) &&
+                        class_exists($relationshipInstance->getRelated()::class) &&
+                        in_array($relationshipInstance::class, [
+                            HasMany::class,
+                            BelongsToMany::class,
+                            MorphMany::class,
+                            MorphToMany::class,
+                        ])
+                    ) {
+                        $relationshipType = $relationshipInstance::class;
+                    } else {
+                        $relationshipType = select(
+                            label: 'What type of relationship is this?',
+                            options: [
+                                HasMany::class => 'HasMany',
+                                BelongsToMany::class => 'BelongsToMany',
+                                MorphMany::class => 'MorphMany',
+                                MorphToMany::class => 'MorphToMany',
+                                'other' => 'Other',
+                            ],
+                        );
+
+                        if ($relationshipType === 'other') {
+                            $relationshipType = null;
+                        }
+                    }
+                } catch (Throwable) {
+                    //
                 }
             }
         }

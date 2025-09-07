@@ -57,7 +57,6 @@ trait CanGenerateModelInfolists
 
             if (in_array($type['name'], [
                 'json',
-                'text',
             ])) {
                 continue;
             }
@@ -80,6 +79,8 @@ trait CanGenerateModelInfolists
                 continue;
             }
 
+            $componentData = [];
+
             if (str($componentName)->endsWith('_id')) {
                 $guessedRelationshipName = $this->guessBelongsToRelationshipName($componentName, $model);
 
@@ -87,12 +88,15 @@ trait CanGenerateModelInfolists
                     $guessedRelationshipTitleColumnName = $this->guessBelongsToRelationshipTitleColumnName($componentName, app($model)->{$guessedRelationshipName}()->getModel()::class);
 
                     $componentName = "{$guessedRelationshipName}.{$guessedRelationshipTitleColumnName}";
+
+                    $componentData['label'] = [(string) str($guessedRelationshipName)
+                        ->kebab()
+                        ->replace(['-', '_'], ' ')
+                        ->ucfirst()];
                 }
             } else {
                 $guessedRelationshipName = null;
             }
-
-            $componentData = [];
 
             if (in_array($componentName, [
                 'id',
@@ -145,11 +149,19 @@ trait CanGenerateModelInfolists
                 }
             }
 
-            if ($componentName === 'deleted_at') {
+            if (in_array($componentName, [
+                'deleted_at',
+            ])) {
                 $componentData['visible'] = [new Literal('fn (' . class_basename($model) . ' $record): bool => $record->trashed()')];
                 $this->namespace->addUse($model);
             } elseif ($column['nullable']) {
                 $componentData['placeholder'] = ['-'];
+            }
+
+            if (in_array($type['name'], [
+                'text',
+            ])) {
+                $componentData['columnSpanFull'] = [];
             }
 
             $this->importUnlessPartial($componentData['type']);

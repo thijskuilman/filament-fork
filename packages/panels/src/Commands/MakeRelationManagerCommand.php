@@ -28,6 +28,7 @@ use ReflectionMethod;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
+use Throwable;
 
 use function Laravel\Prompts\confirm;
 use function Laravel\Prompts\info;
@@ -421,9 +422,30 @@ class MakeRelationManagerCommand extends Command
 
         $relatedModel = $this->option('related-model');
 
-        $this->relatedModelFqn = filled($relatedModel) && class_exists($relatedModel)
-            ? $relatedModel
-            : $this->askForRelatedModel($this->relationship);
+        if (filled($relatedModel) && class_exists($relatedModel)) {
+            $this->relatedModelFqn = $relatedModel;
+
+            return;
+        }
+
+        try {
+            $resourceModelFqn = $this->resourceFqn::getModel();
+
+            if (
+                class_exists($resourceModelFqn) &&
+                method_exists($resourceModelFqn, $this->relationship) &&
+                (($relationshipInstance = app($resourceModelFqn)->{$this->relationship}()) instanceof Relation) &&
+                class_exists($relatedModel = $relationshipInstance->getRelated()::class)
+            ) {
+                $this->relatedModelFqn = $relatedModel;
+
+                return;
+            }
+        } catch (Throwable) {
+            //
+        }
+
+        $this->askForRelatedModel($this->relationship);
     }
 
     protected function configureRecordTitleAttributeIfNotAlready(): void
@@ -488,11 +510,11 @@ class MakeRelationManagerCommand extends Command
     protected function configureIsSoftDeletable(): void
     {
         $this->isSoftDeletable = $this->option('soft-deletes') || ((static::$shouldCheckModelsForSoftDeletes && filled($this->relatedModelFqn))
-            ? in_array(SoftDeletes::class, class_uses_recursive($this->relatedModelFqn))
-            : confirm(
-                label: 'Does the model use soft-deletes?',
-                default: false,
-            ));
+                ? in_array(SoftDeletes::class, class_uses_recursive($this->relatedModelFqn))
+                : confirm(
+                    label: 'Does the model use soft-deletes?',
+                    default: false,
+                ));
     }
 
     protected function configureRelationshipType(): void
@@ -507,6 +529,29 @@ class MakeRelationManagerCommand extends Command
             $this->relationshipType = BelongsToMany::class;
 
             return;
+        }
+
+        try {
+            $resourceModelFqn = $this->resourceFqn::getModel();
+
+            if (
+                class_exists($resourceModelFqn) &&
+                method_exists($resourceModelFqn, $this->relationship) &&
+                (($relationshipInstance = app($resourceModelFqn)->{$this->relationship}()) instanceof Relation) &&
+                class_exists($relationshipInstance->getRelated()::class) &&
+                in_array($relationshipInstance::class, [
+                    HasMany::class,
+                    BelongsToMany::class,
+                    MorphMany::class,
+                    MorphToMany::class,
+                ])
+            ) {
+                $this->relationshipType = $relationshipInstance::class;
+
+                return;
+            }
+        } catch (Throwable) {
+            //
         }
 
         $this->relationshipType = select(
