@@ -119,6 +119,10 @@ trait CanGenerateModelInfolists
                     default => TextEntry::class,
                 };
 
+                if (($type['name'] === 'enum') || array_key_exists($componentName, $this->getEnumCasts($model))) {
+                    $componentData['badge'] = [];
+                }
+
                 if ($type['name'] === 'date') {
                     $componentData['date'] = [];
                 }

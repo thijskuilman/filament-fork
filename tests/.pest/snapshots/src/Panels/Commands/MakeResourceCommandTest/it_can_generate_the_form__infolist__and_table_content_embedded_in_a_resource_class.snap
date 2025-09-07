@@ -84,6 +84,7 @@ class PostResource extends Resource
                     ->placeholder('-')
                     ->columnSpanFull(),
                 TextEntry::make('string_backed_enum')
+                    ->badge()
                     ->placeholder('-'),
                 TextEntry::make('created_at')
                     ->dateTime()
@@ -111,6 +112,7 @@ class PostResource extends Resource
                 TextColumn::make('title')
                     ->searchable(),
                 TextColumn::make('string_backed_enum')
+                    ->badge()
                     ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()

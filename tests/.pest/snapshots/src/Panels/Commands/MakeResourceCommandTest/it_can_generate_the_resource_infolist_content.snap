@@ -33,6 +33,7 @@ class PostInfolist
                     ->placeholder('-')
                     ->columnSpanFull(),
                 TextEntry::make('string_backed_enum')
+                    ->badge()
                     ->placeholder('-'),
                 TextEntry::make('created_at')
                     ->dateTime()
