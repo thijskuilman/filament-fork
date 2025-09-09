@@ -146,7 +146,7 @@ class AppAuthentication implements MultiFactorAuthenticationProvider
         if (
             class_exists('BaconQrCode\Writer') &&
             class_exists('BaconQrCode\Renderer\ImageRenderer') &&
-            !extension_loaded('imagick')
+            ! extension_loaded('imagick')
         ) {
             $inlineQrCode = 'data:image/svg+xml;base64,' . base64_encode($inlineQrCode);
         }
