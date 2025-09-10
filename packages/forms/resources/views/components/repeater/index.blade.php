@@ -15,6 +15,7 @@
     $reorderAction = $getAction($getReorderActionName());
     $extraItemActions = $getExtraItemActions();
 
+    $hasItemNumbers = $hasItemNumbers();
     $isAddable = $isAddable();
     $isCloneable = $isCloneable();
     $isCollapsible = $isCollapsible();
@@ -79,7 +80,6 @@
                     @foreach ($containers as $uuid => $item)
                         @php
                             $itemLabel = $getItemLabel($uuid);
-                            $hasItemNumbers = $hasItemNumbers();
                             $visibleExtraItemActions = array_filter(
                                 $extraItemActions,
                                 fn (Action $action): bool => $action(['item' => $uuid])->isVisible(),
