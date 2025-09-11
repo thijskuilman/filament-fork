@@ -319,67 +319,35 @@ class ImportAction extends Action
                                     ->markAsRead(),
                             ]),
                         )
-                        ->sendToDatabase($import->user, isEventDispatched: true);
+                        ->when(
+                            ($jobConnection === 'sync') ||
+                            (blank($jobConnection) && (config('queue.default') === 'sync')),
+                            fn (Notification $notification) => $notification
+                                ->persistent()
+                                ->send(),
+                            fn (Notification $notification) => $notification->sendToDatabase($import->user, isEventDispatched: true),
+                        );
                 })
                 ->dispatch();
 
             if (
-                (filled($jobConnection) && ($jobConnection !== 'sync')) ||
-                (blank($jobConnection) && (config('queue.default') !== 'sync'))
+                ($jobConnection === 'sync')
+                || (blank($jobConnection) && (config('queue.default') === 'sync'))
             ) {
-                $action->successNotification(
-                    Notification::make()
-                        ->title($action->getSuccessNotificationTitle())
-                        ->body(trans_choice('filament-actions::import.notifications.started.body', $import->total_rows, [
-                            'count' => Number::format($import->total_rows),
-                        ]))
-                        ->success(),
-                );
+                $action->successNotification(null);
+                $action->successNotificationTitle(null);
 
                 return;
             }
 
-            $import->refresh();
-
-            $failedRowsCount = $import->getFailedRowsCount();
-
-            $notification = Notification::make()
-                ->title($import->importer::getCompletedNotificationTitle($import))
-                ->body($import->importer::getCompletedNotificationBody($import))
-                ->when(
-                    ! $failedRowsCount,
-                    fn (Notification $notification) => $notification->success(),
-                )
-                ->when(
-                    $failedRowsCount && ($failedRowsCount < $import->total_rows),
-                    fn (Notification $notification) => $notification->warning(),
-                )
-                ->when(
-                    $failedRowsCount === $import->total_rows,
-                    fn (Notification $notification) => $notification->danger(),
-                )
-                ->when(
-                    $failedRowsCount,
-                    fn (Notification $notification) => $notification->actions([
-                        Action::make('downloadFailedRowsCsv')
-                            ->label(trans_choice('filament-actions::import.notifications.completed.actions.download_failed_rows_csv.label', $failedRowsCount, [
-                                'count' => Number::format($failedRowsCount),
-                            ]))
-                            ->color('danger')
-                            ->url(URL::signedRoute('filament.imports.failed-rows.download', ['authGuard' => $authGuard, 'import' => $import], absolute: false), shouldOpenInNewTab: true)
-                            ->markAsRead(),
-                    ]),
-                )
-                ->persistent();
-
-            if ($failedRowsCount > 0) {
-                $action->failureNotification($notification);
-                $action->failure();
-
-                return;
-            }
-
-            $action->successNotification($notification);
+            $action->successNotification(
+                Notification::make()
+                    ->title($action->getSuccessNotificationTitle())
+                    ->body(trans_choice('filament-actions::import.notifications.started.body', $import->total_rows, [
+                        'count' => Number::format($import->total_rows),
+                    ]))
+                    ->success(),
+            );
         });
 
         $this->registerModalActions([
