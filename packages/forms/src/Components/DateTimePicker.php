@@ -8,6 +8,8 @@ use Carbon\Exceptions\InvalidFormatException;
 use Closure;
 use DateTime;
 use Filament\Schemas\Components\Contracts\HasAffixActions;
+use Filament\Schemas\Components\StateCasts\Contracts\StateCast;
+use Filament\Schemas\Components\StateCasts\StringStateCast;
 use Filament\Support\Concerns\HasExtraAlpineAttributes;
 use Filament\Support\Facades\FilamentTimezone;
 use Filament\Support\Icons\Heroicon;
@@ -147,6 +149,17 @@ class DateTimePicker extends Field implements HasAffixActions
             'date',
             static fn (DateTimePicker $component): bool => $component->hasDate(),
         );
+    }
+
+    /**
+     * @return array<StateCast>
+     */
+    public function getDefaultStateCasts(): array
+    {
+        return [
+            ...parent::getDefaultStateCasts(),
+            app(StringStateCast::class, ['isNullable' => true]),
+        ];
     }
 
     public function displayFormat(string | Closure | null $format): static
