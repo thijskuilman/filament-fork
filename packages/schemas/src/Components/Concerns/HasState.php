@@ -169,7 +169,13 @@ trait HasState
 
         if (filled($components = $this->getComponentsToPartiallyRenderAfterStateUpdated())) {
             foreach ($components as $key) {
-                $this->getLivewire()->getSchemaComponent($this->resolveRelativeKey($key), withHidden: true)?->partiallyRender() ?? throw new InvalidArgumentException("Could not find component [{$key}] to partially render.");
+                $component = $this->getLivewire()->getSchemaComponent($this->resolveRelativeKey($key), withHidden: true);
+
+                if (! $component) {
+                    throw new InvalidArgumentException("Could not find component [{$key}] to partially render.");
+                }
+
+                $component->partiallyRender();
             }
         }
 
