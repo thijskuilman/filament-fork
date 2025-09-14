@@ -451,14 +451,14 @@ trait HasState
         }
 
         if (! $this->hasDefaultState()) {
-            $this->hasStatePath() && $this->state(null);
+            $this->hasStatePath() && $this->rawState(null);
 
             return;
         }
 
         $defaultState = $this->getDefaultState();
 
-        $this->state($defaultState);
+        $this->rawState($defaultState);
 
         Arr::set($hydratedDefaultState, $statePath, $defaultState); /** @phpstan-ignore parameterByRef.type */
     }
