@@ -512,7 +512,7 @@ class Action extends ViewComponent implements Arrayable
      */
     protected function resolveDefaultClosureDependencyForEvaluationByType(string $parameterType): array
     {
-        $record = $this->getRecord() ?? $this->getSchemaContainer()?->getRecord() ?? $this->getSchemaComponent()?->getRecord();
+        $record = $this->getRecord();
 
         return match ($parameterType) {
             Builder::class => [$this->getSelectedRecordsQuery()],

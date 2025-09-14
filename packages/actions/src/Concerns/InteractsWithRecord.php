@@ -120,10 +120,6 @@ trait InteractsWithRecord
             return $record;
         }
 
-        if ($record = $this->getGroup()?->getRecord($withDefault)) {
-            return $record;
-        }
-
         if (($this instanceof Action) && $record = $this->getSchemaContainer()?->getRecord()) {
             return $record;
         }
@@ -132,11 +128,7 @@ trait InteractsWithRecord
             return $record;
         }
 
-        if ($withDefault && ($this instanceof Action) && ($record = $this->getHasActionsLivewire()?->getDefaultActionRecord($this))) {
-            return $record;
-        }
-
-        return null;
+        return ($withDefault && ($this instanceof Action)) ? $this->getHasActionsLivewire()?->getDefaultActionRecord($this) : null;
     }
 
     public function getRecordTitle(?Model $record = null): ?string
@@ -248,12 +240,12 @@ trait InteractsWithRecord
 
         $record = $this->getRecord($withDefault);
 
-        if (! is_null($record)) {
-            if (! ($record instanceof Model)) {
-                return ($withDefault && ($this instanceof Action)) ? $this->getHasActionsLivewire()?->getDefaultActionModel($this) : null;
-            }
-
+        if ($record instanceof Model) {
             return $record::class;
+        }
+
+        if ($record = $this->getGroup()?->getModel($withDefault)) {
+            return $record;
         }
 
         if ($this instanceof Action && $model = $this->getSchemaContainer()?->getModel()) {
@@ -264,7 +256,7 @@ trait InteractsWithRecord
             return $model;
         }
 
-        return null;
+        return ($withDefault && ($this instanceof Action)) ? $this->getHasActionsLivewire()?->getDefaultActionModel($this) : null;
     }
 
     /**
