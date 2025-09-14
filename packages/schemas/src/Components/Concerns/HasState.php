@@ -3,7 +3,6 @@
 namespace Filament\Schemas\Components\Concerns;
 
 use Closure;
-use Exception;
 use Filament\Forms\Components\RichEditor\Models\Contracts\HasRichContent;
 use Filament\Infolists\Components\Entry;
 use Filament\Schemas\Components\Component;
@@ -15,7 +14,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use InvalidArgumentException;
 use Livewire\Livewire;
+use LogicException;
 
 use function Livewire\store;
 
@@ -168,7 +169,13 @@ trait HasState
 
         if (filled($components = $this->getComponentsToPartiallyRenderAfterStateUpdated())) {
             foreach ($components as $key) {
-                $this->getLivewire()->getSchemaComponent($this->resolveRelativeKey($key))->partiallyRender();
+                $component = $this->getLivewire()->getSchemaComponent($this->resolveRelativeKey($key), withHidden: true);
+
+                if (! $component) {
+                    throw new InvalidArgumentException("Could not find component [{$key}] to partially render.");
+                }
+
+                $component->partiallyRender();
             }
         }
 
@@ -444,14 +451,14 @@ trait HasState
         }
 
         if (! $this->hasDefaultState()) {
-            $this->hasStatePath() && $this->state(null);
+            $this->hasStatePath() && $this->rawState(null);
 
             return;
         }
 
         $defaultState = $this->getDefaultState();
 
-        $this->state($defaultState);
+        $this->rawState($defaultState);
 
         Arr::set($hydratedDefaultState, $statePath, $defaultState); /** @phpstan-ignore parameterByRef.type */
     }
@@ -879,7 +886,7 @@ trait HasState
         }
 
         if (! str($statePath)->startsWith("{$containerConstantStatePath}.")) {
-            throw new Exception("The current component\'s state path [$statePath] does not start with the container\'s constant state path [$containerConstantStatePath].");
+            throw new LogicException("The current component\'s state path [$statePath] does not start with the container\'s constant state path [$containerConstantStatePath].");
         }
 
         return (string) str($statePath)->after("{$containerConstantStatePath}.");

@@ -77,13 +77,13 @@ trait HasComponents
             $componentKey = $component->getKey(isAbsolute: false);
 
             if (filled($componentKey)) {
-                if (blank($nestedContainerKey)) {
-                    continue;
-                }
+                $componentInheritanceKey = $component->getInheritanceKey(isAbsolute: false);
 
                 if (
+                    filled($nestedContainerKey) &&
                     ($nestedContainerKey !== $componentKey) &&
-                    (! str($nestedContainerKey)->startsWith("{$componentKey}."))
+                    filled($componentInheritanceKey) &&
+                    (! str($nestedContainerKey)->startsWith("{$componentInheritanceKey}."))
                 ) {
                     continue;
                 }
@@ -94,8 +94,10 @@ trait HasComponents
                     }
 
                     $componentNestedContainerKey = null;
+                } elseif (filled($nestedContainerKey) && filled($componentInheritanceKey)) {
+                    $componentNestedContainerKey = (string) str($nestedContainerKey)->after("{$componentInheritanceKey}.");
                 } else {
-                    $componentNestedContainerKey = (string) str($nestedContainerKey)->after("{$componentKey}.");
+                    $componentNestedContainerKey = $nestedContainerKey;
                 }
             } else {
                 $componentNestedContainerKey = $nestedContainerKey;
@@ -173,7 +175,9 @@ trait HasComponents
                     continue;
                 }
 
-                if (blank($componentKey) || str_starts_with($findComponentUsing, "{$componentKey}.")) {
+                $componentInheritanceKey = $component->getInheritanceKey();
+
+                if (blank($componentInheritanceKey) || str_starts_with($findComponentUsing, "{$componentInheritanceKey}.")) {
                     foreach ($component->getChildSchemas($withHidden) as $childSchema) {
                         if ($foundComponent = $childSchema->getComponent($findComponentUsing, $withActions, $withHidden, $isAbsoluteKey, $skipComponentChildContainersWhileSearching)) {
                             return $foundComponent;
