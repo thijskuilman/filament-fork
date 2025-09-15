@@ -508,6 +508,20 @@ Repeater::make('members')
 
 <AutoScreenshot name="forms/fields/repeater/labelled" alt="Repeater with item labels" version="4.x" />
 
+## Numbering repeater items
+
+Unlike Builders, items in the repeater don't have a number next to their label by default. You may enable this using the `itemNumbers(true)` method:
+
+```php
+use Filament\Forms\Components\Repeater;
+
+Repeater::make('members')
+    ->schema([
+        // ...
+    ])
+    ->itemNumbers(true)
+```
+
 ## Simple repeaters with one field
 
 You can use the `simple()` method to create a repeater with a single field, using a minimal design
