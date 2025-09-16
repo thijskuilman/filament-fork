@@ -284,6 +284,10 @@ return [
 
     'markdown_editor' => [
 
+        'file_attachments_accepted_file_types_message' => 'Uploaded files must be of type: :values.',
+
+        'file_attachments_max_size_message' => 'Uploaded files must not be greater than :max kilobytes.',
+
         'tools' => [
             'attach_files' => 'Attach files',
             'blockquote' => 'Blockquote',

@@ -32,7 +32,7 @@ trait HasFileAttachments
      */
     protected array | Arrayable | Closure | null $fileAttachmentsAcceptedFileTypes = ['image/png', 'image/jpeg', 'image/gif', 'image/webp'];
 
-    protected int | Closure | null $fileAttachmentsMaxSize = null;
+    protected int | Closure | null $fileAttachmentsMaxSize = 12288;
 
     public function fileAttachmentsDirectory(string | Closure | null $directory): static
     {
