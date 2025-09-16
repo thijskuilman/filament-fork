@@ -36,3 +36,9 @@ input.fi-input {
         @apply text-justify;
     }
 }
+
+input[type='range'].fi-input {
+    margin-inline: auto;
+    width: 98%;
+    appearance: auto;
+}
