@@ -21,6 +21,10 @@ class StringStateCast implements StateCast
             $state = $state->value;
         }
 
+        if (is_int($state) || (is_string($state) && ctype_digit($state))) {
+            return intval($state);
+        }
+
         return strval($state);
     }
 

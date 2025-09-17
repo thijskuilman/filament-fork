@@ -31,7 +31,11 @@ class StringArrayStateCast implements StateCast
                     $stateItem = $stateItem->value;
                 }
 
-                $carry[] = strval($stateItem);
+                if (is_int($stateItem) || (is_string($stateItem) && ctype_digit($stateItem))) {
+                    $carry[] = intval($stateItem);
+                } else {
+                    $carry[] = strval($stateItem);
+                }
 
                 return $carry;
             },
