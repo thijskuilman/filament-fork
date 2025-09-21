@@ -81,7 +81,7 @@ class GridAction
                                         startSpan: 3,
                                         endSpan: 1,
                                     },
-                                }[$state]).forEach(([key, value]) => $set(key, value))
+                                }[$state] ?? {}).forEach(([key, value]) => $set(key, value))
                             JS)
                             ->dehydrated(false),
                         Select::make('fromBreakpoint')
