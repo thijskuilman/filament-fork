@@ -132,7 +132,7 @@ use Filament\Infolists\Components\RepeatableEntry\TableColumn;
 use Filament\Support\Enums\Alignment;
 
 TableColumn::make('Name')
-    ->alignment(Alignment::Start)
+    ->alignment(Alignment::Center)
 ```
 
 You can set a fixed column width using the `width()` method, passing a string value that represents the width of the column. This value is passed directly to the `style` attribute of the column header:
