@@ -2344,11 +2344,11 @@ EasyMDE.prototype.render = function (el) {
         const inputField = cm.getInputField()
         const form = inputField.form
         if (form) {
-            const elements = Array.from(form.elements).filter(el => {
-                if (el.closest && el.closest('.editor-toolbar')) return false;
-                if (el.offsetParent === null) return false;
-                return true;
-            });
+            const elements = Array.from(form.elements).filter((el) => {
+                if (el.closest && el.closest('.editor-toolbar')) return false
+                if (el.offsetParent === null) return false
+                return true
+            })
             const index = elements.indexOf(inputField)
             if (
                 index !== -1 &&
@@ -2364,15 +2364,15 @@ EasyMDE.prototype.render = function (el) {
         const inputField = cm.getInputField()
         const form = inputField.form
         if (form) {
-            const elements = Array.from(form.elements).filter(el => {
-                if (el.closest && el.closest('.editor-toolbar')) return false;
-                if (el.offsetParent === null) return false;
-                return true;
-            });
+            const elements = Array.from(form.elements).filter((el) => {
+                if (el.closest && el.closest('.editor-toolbar')) return false
+                if (el.offsetParent === null) return false
+                return true
+            })
             const index = elements.indexOf(inputField)
             if (index !== -1) {
                 for (let i = index - 1; i >= 0; i--) {
-                    const element = elements[i];
+                    const element = elements[i]
                     if (element) {
                         element.focus()
                         break
