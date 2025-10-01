@@ -13,6 +13,9 @@
     $floatingToolbars = $getFloatingToolbars();
     $fileAttachmentsMaxSize = $getFileAttachmentsMaxSize();
     $fileAttachmentsAcceptedFileTypes = $getFileAttachmentsAcceptedFileTypes();
+    $contentStructure = $getContentStructure();
+    $nodePlaceholders = $getNodePlaceholders();
+    $showOnlyCurrentPlaceholder = $getShowOnlyCurrentPlaceholder();
 @endphp
 
 <x-dynamic-component :component="$fieldWrapperView" :field="$field">
@@ -44,7 +47,10 @@
                         maxFileSizeValidationMessage: @js($fileAttachmentsMaxSize ? trans_choice('filament-forms::components.rich_editor.file_attachments_max_size_message', $fileAttachmentsMaxSize, ['max' => $fileAttachmentsMaxSize]) : null),
                         mergeTags: @js($mergeTags),
                         noMergeTagSearchResultsMessage: @js($getNoMergeTagSearchResultsMessage()),
+                        contentStructure: @js($contentStructure),
                         placeholder: @js($getPlaceholder()),
+                        nodePlaceholders: @js($nodePlaceholders),
+                        showOnlyCurrentPlaceholder: @js($showOnlyCurrentPlaceholder),
                         state: $wire.{{ $applyStateBindingModifiers("\$entangle('{$statePath}')", isOptimisticallyLive: false) }},
                         statePath: @js($statePath),
                         textColors: @js($getTextColorsForJs()),
