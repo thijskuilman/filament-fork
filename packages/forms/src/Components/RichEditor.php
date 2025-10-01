@@ -93,6 +93,12 @@ class RichEditor extends Field implements Contracts\CanBeLengthConstrained
 
     protected bool | Closure | null $hasCustomTextColors = null;
 
+    protected string | Closure | null $contentStructure = null;
+
+    protected array | Closure | null $nodePlaceholders = null;
+
+    protected array | bool | null $showOnlyCurrentPlaceholder = false;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -1013,5 +1019,55 @@ class RichEditor extends Field implements Contracts\CanBeLengthConstrained
     public function hasCustomTextColors(): bool
     {
         return (bool) ($this->evaluate($this->hasCustomTextColors) ?? $this->getContentAttribute()?->hasCustomTextColors() ?? false);
+    }
+
+    public function contentStructure(string | Closure | null $contentStructure): static
+    {
+        $this->contentStructure = $contentStructure;
+
+        return $this;
+    }
+
+    public function getContentStructure(): ?string
+    {
+        return $this->evaluate($this->contentStructure);
+    }
+
+    /**
+     * Set placeholders for specific node types.
+     *
+     * You can provide an associative array where the keys are the node type names and the
+     * values are the corresponding placeholders. For instance:
+     *
+     * ['heading' => 'What’s the title?', 'paragraph' => 'Start writing here...']
+     * @return $this
+     */
+    public function nodePlaceholders(array | Closure | null $nodePlaceholders): static
+    {
+        $this->nodePlaceholders = $nodePlaceholders;
+
+        return $this;
+    }
+
+    public function getNodePlaceholders(): ?array
+    {
+        return $this->evaluate($this->nodePlaceholders);
+    }
+
+    /**
+     * Show placeholder decorations only in currently selected node.
+     *
+     * @return $this
+     */
+    public function showOnlyCurrentPlaceholder(bool | Closure | null $showOnlyCurrent): static
+    {
+        $this->showOnlyCurrentPlaceholder = $showOnlyCurrent;
+
+        return $this;
+    }
+
+    public function getShowOnlyCurrentPlaceholder(): ?bool
+    {
+        return $this->evaluate($this->showOnlyCurrentPlaceholder);
     }
 }
