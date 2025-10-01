@@ -189,9 +189,35 @@ RichEditor::make('content')
 
 You do not need to use `customTextColors()` on the [content renderer](#rendering-rich-content), as it will automatically render any custom colors that are used in the content.
 
-### Node Placeholders
+## Enforcing a content structure
 
-You can define specific placeholders for each node type using the `->nodePlaceholders()` method. This method accepts an array, where the keys are the node type names, and the values are the corresponding placeholder texts.
+If your editor requires content to follow a specific structure, you may use the `->contentStructure()` method which accepts a simple expression syntax.
+
+```php
+use Filament\Forms\Components\RichEditor;
+
+RichEditor::make('content')
+    ->contentStructure('heading block*')
+    ->default([
+        "type" => "doc",
+        "content" => [
+            [
+                "type" => "heading",
+                "content" => [],
+                "attrs" => [
+                    "level" => 1
+                ]
+            ],
+        ]
+    ])
+```
+<Aside variant="tip">
+    If your structure starts with a non-paragraph block (for example, a heading), make sure your default state also begins with that block to match the required structure.
+</Aside>
+
+## Node Placeholders
+
+The `->nodePlaceholders()` method lets you set different placeholder text for each node type.
 
 ```php
 use Filament\Forms\Components\RichEditor;
@@ -203,13 +229,12 @@ RichEditor::make('content')
     ])
 ```
 
-The `->showOnlyCurrentPlaceholder()` method allows you to control whether placeholders are shown for all nodes simultaneously or only for the currently selected node.
+By default, placeholders are shown only for the currently selected node. You can override this with the `->showOnlyCurrentPlaceholder()` method:
 
 ```php
 use Filament\Forms\Components\RichEditor;
 
 RichEditor::make('content')
-    // All nodes will immediately be displayed, instead of only the selected node
     ->showOnlyCurrentPlaceholder(false)
 ```
 
