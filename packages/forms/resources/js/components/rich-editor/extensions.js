@@ -119,7 +119,11 @@ export default async ({
     OrderedList,
     Paragraph,
     Placeholder.configure({
-        placeholder,
+        showOnlyCurrent: showOnlyCurrentPlaceholder,
+        placeholder: ({ node }) => {
+            const nodeSpecificPlaceholder = nodePlaceholders?.[node.type.name];
+            return nodeSpecificPlaceholder || placeholder || '';
+        },
     }),
     TextColor.configure({
         textColors,
