@@ -189,6 +189,30 @@ RichEditor::make('content')
 
 You do not need to use `customTextColors()` on the [content renderer](#rendering-rich-content), as it will automatically render any custom colors that are used in the content.
 
+### Node Placeholders
+
+You can define specific placeholders for each node type using the `->nodePlaceholders()` method. This method accepts an array, where the keys are the node type names, and the values are the corresponding placeholder texts.
+
+```php
+use Filament\Forms\Components\RichEditor;
+
+RichEditor::make('content')
+    ->nodePlaceholders([
+        'paragraph' => 'Start writing your paragraph...',
+        'heading' => 'Insert a heading...',
+    ])
+```
+
+The `->showOnlyCurrentPlaceholder()` method allows you to control whether placeholders are shown for all nodes simultaneously or only for the currently selected node.
+
+```php
+use Filament\Forms\Components\RichEditor;
+
+RichEditor::make('content')
+    // All nodes will immediately be displayed, instead of only the selected node
+    ->showOnlyCurrentPlaceholder(false)
+```
+
 ## Rendering rich content
 
 If you're [storing content as JSON](#storing-content-as-json) instead of HTML, or your content requires processing to inject [private image URLs](#using-private-images-in-the-editor) or similar, you'll need to use the `RichContentRenderer` tool in Filament to output HTML:
