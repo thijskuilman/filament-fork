@@ -73,7 +73,9 @@ export default async ({
     Details,
     DetailsSummary,
     DetailsContent,
-    Document,
+    contentStructure ? Document.extend({
+        content: contentStructure
+    }) : Document ,
     Dropcursor,
     Gapcursor,
     Grid,
