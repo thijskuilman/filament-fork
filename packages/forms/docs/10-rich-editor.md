@@ -191,7 +191,7 @@ You do not need to use `customTextColors()` on the [content renderer](#rendering
 
 ## Enforcing a content structure
 
-If your editor requires content to follow a specific structure, you may use the `->contentStructure()` method which accepts a simple expression syntax.
+If your editor requires content to follow a specific structure, you may use the `contentStructure()` method which accepts a simple expression syntax.
 
 ```php
 use Filament\Forms\Components\RichEditor;
@@ -212,12 +212,12 @@ RichEditor::make('content')
     ])
 ```
 <Aside variant="tip">
-    If your structure starts with a non-paragraph block (for example, a heading), make sure your default state also begins with that block to match the required structure.
+    If your structure starts with a non-paragraph node (for example, a heading), make sure your default state also begins with that node type.
 </Aside>
 
 ## Node Placeholders
 
-The `->nodePlaceholders()` method lets you set different placeholder text for each node type.
+The `nodePlaceholders()` method lets you set a different placeholder for each node type.
 
 ```php
 use Filament\Forms\Components\RichEditor;
@@ -229,7 +229,7 @@ RichEditor::make('content')
     ])
 ```
 
-By default, placeholders are shown only for the currently selected node. You can override this with the `->showOnlyCurrentPlaceholder()` method:
+By default, placeholders are shown only for the currently selected node. You can override this with the `showOnlyCurrentPlaceholder()` method:
 
 ```php
 use Filament\Forms\Components\RichEditor;
