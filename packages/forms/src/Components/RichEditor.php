@@ -1040,6 +1040,7 @@ class RichEditor extends Field implements Contracts\CanBeLengthConstrained
      * values are the corresponding placeholders. For instance:
      *
      * ['heading' => 'What’s the title?', 'paragraph' => 'Start writing here...']
+     *
      * @return $this
      */
     public function nodePlaceholders(array | Closure | null $nodePlaceholders): static

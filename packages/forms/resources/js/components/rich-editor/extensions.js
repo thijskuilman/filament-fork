@@ -73,9 +73,11 @@ export default async ({
     Details,
     DetailsSummary,
     DetailsContent,
-    contentSchema ? Document.extend({
-        content: contentSchema
-    }) : Document ,
+    contentSchema
+        ? Document.extend({
+              content: contentSchema,
+          })
+        : Document,
     Dropcursor,
     Gapcursor,
     Grid,
@@ -122,8 +124,8 @@ export default async ({
         emptyEditorClass: 'tiptap-placeholder',
         showOnlyCurrent: showOnlyCurrentPlaceholder,
         placeholder: ({ node }) => {
-            const nodeSpecificPlaceholder = nodePlaceholders?.[node.type.name];
-            return nodeSpecificPlaceholder || placeholder || '';
+            const nodeSpecificPlaceholder = nodePlaceholders?.[node.type.name]
+            return nodeSpecificPlaceholder || placeholder || ''
         },
     }),
     TextColor.configure({
