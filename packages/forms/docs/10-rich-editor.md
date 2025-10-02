@@ -191,7 +191,7 @@ You do not need to use `customTextColors()` on the [content renderer](#rendering
 
 ## Enforcing a content structure
 
-If your editor requires content to follow a specific structure, you may use the `contentStructure()` method which accepts a simple expression syntax.
+If your editor requires content to follow a specific structure, you may use the `contentStructure()` method which accepts a schema.
 
 ```php
 use Filament\Forms\Components\RichEditor;
@@ -211,8 +211,13 @@ RichEditor::make('content')
         ]
     ])
 ```
+
 <Aside variant="tip">
-    If your structure starts with a non-paragraph node (for example, a heading), make sure your default state also begins with that node type.
+    If your structure starts with a non-paragraph node (for example, a heading), make sure your `default()` state matches the schema.
+</Aside>
+
+<Aside variant="tip">
+    If your structure begins with a non-paragraph node (such as a heading) and you want to make it required, you’ll need to define a custom rule. The default `required()` validation only applies when the first node is a paragraph.
 </Aside>
 
 ## Node Placeholders
