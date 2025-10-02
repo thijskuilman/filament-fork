@@ -119,6 +119,7 @@ export default async ({
     OrderedList,
     Paragraph,
     Placeholder.configure({
+        emptyEditorClass: 'tiptap-placeholder',
         showOnlyCurrent: showOnlyCurrentPlaceholder,
         placeholder: ({ node }) => {
             const nodeSpecificPlaceholder = nodePlaceholders?.[node.type.name];
