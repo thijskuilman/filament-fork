@@ -122,8 +122,8 @@ export default async ({
     Paragraph,
     Placeholder.configure({
         emptyNodeClass: showOnlyCurrentPlaceholder
-            ? 'tiptap-multiple-placeholders'
-            : 'tiptap-placeholder',
+            ? 'tiptap-placeholder'
+            : 'tiptap-multiple-placeholder',
         showOnlyCurrent: showOnlyCurrentPlaceholder,
         placeholder: ({ node }) => {
             const nodeSpecificPlaceholder = nodePlaceholders?.[node.type.name]
