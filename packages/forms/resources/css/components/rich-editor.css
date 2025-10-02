@@ -109,7 +109,8 @@
             }
         }
 
-        .tiptap-placeholder {
+        & .tiptap-multiple-placeholders.is-editor-empty,
+        & .tiptap-placeholder.is-editor-empty:first-child {
             &::before {
                 @apply pointer-events-none float-start h-0 text-gray-400;
                 content: attr(data-placeholder);
