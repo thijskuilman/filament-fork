@@ -97,7 +97,7 @@ class RichEditor extends Field implements Contracts\CanBeLengthConstrained
 
     protected array | Closure | null $nodePlaceholders = null;
 
-    protected array | bool | null $showOnlyCurrentPlaceholder = false;
+    protected array | bool | null $showOnlyCurrentPlaceholder = true;
 
     protected function setUp(): void
     {
@@ -1060,7 +1060,7 @@ class RichEditor extends Field implements Contracts\CanBeLengthConstrained
      *
      * @return $this
      */
-    public function showOnlyCurrentPlaceholder(bool | Closure | null $showOnlyCurrent): static
+    public function showOnlyCurrentPlaceholder(bool | Closure | null $showOnlyCurrent = true): static
     {
         $this->showOnlyCurrentPlaceholder = $showOnlyCurrent;
 
