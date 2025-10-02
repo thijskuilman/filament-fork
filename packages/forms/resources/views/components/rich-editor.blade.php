@@ -13,7 +13,7 @@
     $floatingToolbars = $getFloatingToolbars();
     $fileAttachmentsMaxSize = $getFileAttachmentsMaxSize();
     $fileAttachmentsAcceptedFileTypes = $getFileAttachmentsAcceptedFileTypes();
-    $contentStructure = $getContentStructure();
+    $contentSchema = $getContentSchema();
     $nodePlaceholders = $getNodePlaceholders();
     $showOnlyCurrentPlaceholder = $getShowOnlyCurrentPlaceholder();
 @endphp
@@ -47,7 +47,7 @@
                         maxFileSizeValidationMessage: @js($fileAttachmentsMaxSize ? trans_choice('filament-forms::components.rich_editor.file_attachments_max_size_message', $fileAttachmentsMaxSize, ['max' => $fileAttachmentsMaxSize]) : null),
                         mergeTags: @js($mergeTags),
                         noMergeTagSearchResultsMessage: @js($getNoMergeTagSearchResultsMessage()),
-                        contentStructure: @js($contentStructure),
+                        contentSchema: @js($contentSchema),
                         placeholder: @js($getPlaceholder()),
                         nodePlaceholders: @js($nodePlaceholders),
                         showOnlyCurrentPlaceholder: @js($showOnlyCurrentPlaceholder),

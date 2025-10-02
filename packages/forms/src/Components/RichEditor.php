@@ -93,7 +93,7 @@ class RichEditor extends Field implements Contracts\CanBeLengthConstrained
 
     protected bool | Closure | null $hasCustomTextColors = null;
 
-    protected string | Closure | null $contentStructure = null;
+    protected string | Closure | null $contentSchema = null;
 
     protected array | Closure | null $nodePlaceholders = null;
 
@@ -1021,16 +1021,16 @@ class RichEditor extends Field implements Contracts\CanBeLengthConstrained
         return (bool) ($this->evaluate($this->hasCustomTextColors) ?? $this->getContentAttribute()?->hasCustomTextColors() ?? false);
     }
 
-    public function contentStructure(string | Closure | null $contentStructure): static
+    public function contentSchema(string | Closure | null $contentSchema): static
     {
-        $this->contentStructure = $contentStructure;
+        $this->contentSchema = $contentSchema;
 
         return $this;
     }
 
-    public function getContentStructure(): ?string
+    public function getContentSchema(): ?string
     {
-        return $this->evaluate($this->contentStructure);
+        return $this->evaluate($this->contentSchema);
     }
 
     /**

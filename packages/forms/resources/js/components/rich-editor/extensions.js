@@ -50,7 +50,7 @@ export default async ({
     maxFileSizeValidationMessage,
     mergeTags,
     noMergeTagSearchResultsMessage,
-    contentStructure = null,
+    contentSchema = null,
     placeholder,
     nodePlaceholders = [],
     showOnlyCurrentPlaceholder = true,
@@ -73,8 +73,8 @@ export default async ({
     Details,
     DetailsSummary,
     DetailsContent,
-    contentStructure ? Document.extend({
-        content: contentStructure
+    contentSchema ? Document.extend({
+        content: contentSchema
     }) : Document ,
     Dropcursor,
     Gapcursor,
