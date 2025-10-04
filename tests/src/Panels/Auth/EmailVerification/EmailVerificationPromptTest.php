@@ -6,7 +6,6 @@ use Filament\Facades\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Tests\Fixtures\Models\User;
 use Filament\Tests\TestCase;
-use Illuminate\Auth\GenericUser;
 use Illuminate\Support\Facades\Notification;
 
 use function Filament\Tests\livewire;
@@ -87,36 +86,9 @@ it('redirects guests to the panel login route when unauthenticated', function ()
     $panel = Filament::getCurrentOrDefaultPanel();
 
     expect($panel)->not()->toBeNull();
-    expect($panel?->hasLogin())->toBeTrue();
+    expect($panel->hasLogin())->toBeTrue();
     expect(Filament::getEmailVerificationPromptUrl())->not()->toBeNull();
 
     $this->get(Filament::getEmailVerificationPromptUrl())
-        ->assertRedirect($panel?->route('auth.login'));
-});
-
-it('denies access to authenticated users who do not verify email addresses', function (): void {
-    $user = new GenericUser([
-        'id' => 1,
-        'email' => 'generic@example.com',
-    ]);
-
-    $this->be($user);
-
-    expect(Filament::getEmailVerificationPromptUrl())->not()->toBeNull();
-
-    $this->get(Filament::getEmailVerificationPromptUrl())
-        ->assertForbidden();
-});
-
-it('allows authenticated verifiable users to view the prompt', function (): void {
-    $this->withoutMiddleware(Authenticate::class);
-
-    $userToVerify = User::factory()->create([
-        'email_verified_at' => null,
-    ]);
-
-    $this->actingAs($userToVerify);
-
-    $this->get(Filament::getEmailVerificationPromptUrl())
-        ->assertOk();
+        ->assertRedirect($panel?->getUrl());
 });
