@@ -27,26 +27,15 @@ class EmailVerificationPrompt extends SimplePage
 
     public function mount(): void
     {
-        if ($this->getVerifiable()->hasVerifiedEmail()) {
+        if ((! Filament::auth()->check()) || $this->getVerifiable()->hasVerifiedEmail()) {
             redirect()->intended(Filament::getUrl());
         }
     }
 
     protected function getVerifiable(): MustVerifyEmail
     {
-        $user = Filament::auth()->user();
-
-        if ($user === null) {
-            $panel = Filament::getCurrentOrDefaultPanel();
-
-            if ($panel?->hasLogin()) {
-                throw new HttpResponseException(new RedirectResponse($panel->route('auth.login')));
-            }
-
-            abort(403);
-        }
-
         /** @var MustVerifyEmail $user */
+        $user = Filament::auth()->user();
 
         return $user;
     }
