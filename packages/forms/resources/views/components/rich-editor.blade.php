@@ -13,6 +13,8 @@
     $floatingToolbars = $getFloatingToolbars();
     $fileAttachmentsMaxSize = $getFileAttachmentsMaxSize();
     $fileAttachmentsAcceptedFileTypes = $getFileAttachmentsAcceptedFileTypes();
+    $nodePlaceholders = $getNodePlaceholders();
+    $showOnlyCurrentPlaceholder = $getShowOnlyCurrentPlaceholder();
 @endphp
 
 <x-dynamic-component :component="$fieldWrapperView" :field="$field">
@@ -45,6 +47,8 @@
                         mergeTags: @js($mergeTags),
                         noMergeTagSearchResultsMessage: @js($getNoMergeTagSearchResultsMessage()),
                         placeholder: @js($getPlaceholder()),
+                        nodePlaceholders: @js($nodePlaceholders),
+                        showOnlyCurrentPlaceholder: @js($showOnlyCurrentPlaceholder),
                         state: $wire.{{ $applyStateBindingModifiers("\$entangle('{$statePath}')", isOptimisticallyLive: false) }},
                         statePath: @js($statePath),
                         textColors: @js($getTextColorsForJs()),

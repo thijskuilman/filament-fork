@@ -51,6 +51,8 @@ export default async ({
     mergeTags,
     noMergeTagSearchResultsMessage,
     placeholder,
+    nodePlaceholders = [],
+    showOnlyCurrentPlaceholder = true,
     statePath,
     textColors,
     uploadingFileMessage,
