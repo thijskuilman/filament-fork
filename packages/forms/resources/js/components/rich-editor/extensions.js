@@ -179,8 +179,11 @@ export default async ({
             (extension) => extension.name === customExtension.name,
         )
 
-        if(customExtension.name === 'placeholder' && customExtension.parent === null) {
-            customExtension = Placeholder.configure(customExtension.options);
+        if (
+            customExtension.name === 'placeholder' &&
+            customExtension.parent === null
+        ) {
+            customExtension = Placeholder.configure(customExtension.options)
         }
 
         if (existingIndex !== -1) {
