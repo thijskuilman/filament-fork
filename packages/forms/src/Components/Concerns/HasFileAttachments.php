@@ -27,6 +27,8 @@ trait HasFileAttachments
 
     protected string | Closure | null $fileAttachmentsVisibility = null;
 
+    protected ?bool $hasFileAttachments = null;
+
     /**
      * @var array<string> | Arrayable | Closure | null
      */
@@ -286,5 +288,26 @@ trait HasFileAttachments
     public function getFileAttachmentsMaxSize(): ?int
     {
         return $this->evaluate($this->fileAttachmentsMaxSize);
+    }
+
+    public function fileAttachments(?bool $condition): static
+    {
+        $this->hasFileAttachments = $condition;
+
+        return $this;
+    }
+
+    public function hasFileAttachments(): bool
+    {
+        if ($this->hasFileAttachments !== null) {
+            return $this->hasFileAttachments;
+        }
+
+        return $this->hasFileAttachmentsDefault();
+    }
+
+    public function hasFileAttachmentsDefault(): bool
+    {
+        return true;
     }
 }

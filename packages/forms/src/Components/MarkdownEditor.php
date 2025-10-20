@@ -42,7 +42,7 @@ class MarkdownEditor extends Field implements Contracts\CanBeLengthConstrained
 
     public function saveUploadedFileAttachment(TemporaryUploadedFile $file): mixed
     {
-        if (! $this->hasToolbarButton('attachFiles')) {
+        if (! $this->hasFileAttachments()) {
             return null;
         }
 
@@ -70,5 +70,10 @@ class MarkdownEditor extends Field implements Contracts\CanBeLengthConstrained
     public function getFileAttachmentsVisibility(): string
     {
         return 'public';
+    }
+
+    public function hasFileAttachmentsDefault(): bool
+    {
+        return $this->hasToolbarButton('attachFiles');
     }
 }
