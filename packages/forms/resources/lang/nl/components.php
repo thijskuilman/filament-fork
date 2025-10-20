@@ -580,7 +580,7 @@ return [
             'undo' => 'Ongedaan maken',
         ],
 
-        'uploading_file_message' => 'Uploading file...',
+        'uploading_file_message' => 'Het bestand wordt geüpload...',
 
     ],
 
