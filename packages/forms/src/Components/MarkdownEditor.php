@@ -61,7 +61,7 @@ class MarkdownEditor extends Field implements Contracts\CanBeLengthConstrained
         return 'public';
     }
 
-    public function hasFileAttachmentsDefault(): bool
+    public function hasFileAttachmentsByDefault(): bool
     {
         return $this->hasToolbarButton('attachFiles');
     }

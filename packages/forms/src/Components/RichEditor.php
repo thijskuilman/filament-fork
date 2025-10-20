@@ -1015,7 +1015,7 @@ class RichEditor extends Field implements Contracts\CanBeLengthConstrained
         return (bool) ($this->evaluate($this->hasCustomTextColors) ?? $this->getContentAttribute()?->hasCustomTextColors() ?? false);
     }
 
-    public function hasFileAttachmentsDefault(): bool
+    public function hasFileAttachmentsByDefault(): bool
     {
         return $this->hasToolbarButton('attachFiles');
     }
