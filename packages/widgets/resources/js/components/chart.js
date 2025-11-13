@@ -140,6 +140,8 @@ export default function chart({ cachedData, options, type }) {
             if (this.resizeObserver) {
                 this.resizeObserver.disconnect()
             }
+
+            this.getChart()?.destroy()
         },
     }
 }
