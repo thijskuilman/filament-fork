@@ -91,6 +91,11 @@ class RichEditor extends Field implements Contracts\CanBeLengthConstrained
      */
     protected array | Closure | null $textColors = null;
 
+    /**
+     * @var array<string> | Closure | null
+     */
+    protected array | Closure | null $floatingToolbarJsExtensions = null;
+
     protected bool | Closure | null $hasCustomTextColors = null;
 
     protected function setUp(): void
@@ -849,6 +854,24 @@ class RichEditor extends Field implements Contracts\CanBeLengthConstrained
     public function getCustomBlock(string $id): ?string
     {
         return $this->getCachedCustomBlocks()[$id] ?? null;
+    }
+
+    /**
+     * @param  array<string> | Closure | null  $jsExtensions
+     */
+    public function floatingToolbarJsExtensions(array | Closure | null $jsExtensions): static
+    {
+        $this->floatingToolbarJsExtensions = $jsExtensions;
+
+        return $this;
+    }
+
+    /**
+     * @return array<string>
+     */
+    public function getFloatingToolbarJsExtensions(): array
+    {
+        return $this->evaluate($this->floatingToolbarJsExtensions) ?? [];
     }
 
     /**
