@@ -92,8 +92,14 @@ export default function richEditorFormComponent({
                 content: this.state,
             })
 
+            const customBubbleMenuPlugins = await getCustomBubbleMenuPlugins(
+                floatingToolbarExtensions,
+            )
+
             Object.keys(floatingToolbars).forEach((key) => {
-                const element = this.$refs[`floatingToolbar::${key}`]
+                const pluginKey = `floatingToolbar::${key}`
+
+                const element = this.$refs[pluginKey]
 
                 if (!element) {
                     console.warn(`Floating toolbar [${key}] not found.`)
@@ -101,19 +107,27 @@ export default function richEditorFormComponent({
                     return
                 }
 
-                editor.registerPlugin(
-                    BubbleMenuPlugin({
-                        editor,
-                        element,
-                        pluginKey: `floatingToolbar::${key}`,
-                        shouldShow: ({ editor }) =>
-                            editor.isFocused && editor.isActive(key),
-                        options: {
-                            placement: 'bottom',
-                            offset: 15,
-                        },
-                    }),
-                )
+                const customPluginFactory = customBubbleMenuPlugins[key]
+
+                const plugin = customPluginFactory
+                    ? customPluginFactory({
+                          editor,
+                          element,
+                          pluginKey: pluginKey,
+                      })
+                    : BubbleMenuPlugin({
+                          editor,
+                          element,
+                          pluginKey: pluginKey,
+                          shouldShow: ({ editor }) =>
+                              editor.isFocused && editor.isActive(key),
+                          options: {
+                              placement: 'bottom',
+                              offset: 15,
+                          },
+                      })
+
+                editor.registerPlugin(plugin)
             })
 
             editor.on('create', () => {
