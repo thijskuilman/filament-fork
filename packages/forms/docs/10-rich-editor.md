@@ -127,6 +127,41 @@ RichEditor::make('content')
     ])
 ```
 
+For more fine-grained control, you may pass a [TipTap extension](#setting-up-a-tiptap-javascript-extension) to override the default floating toolbar behavior for a specific node type.
+
+```php
+use Filament\Forms\Components\RichEditor;
+
+RichEditor::make('content')
+    ->floatingToolbarJsExtensions([
+        FilamentAsset::getScriptSrc('rich-content-plugins/floating-paragraph-toolbar'),
+    ])
+    ->floatingToolbars([
+        'paragraph' => [
+            'bold', 'italic', 'underline'
+        ],
+    ])
+```
+
+The extension must provide a pluginKey and return a BubbleMenuPlugin instance:
+
+```javascript
+import { BubbleMenuPlugin } from '@tiptap/extension-bubble-menu';
+
+export const pluginKey = 'paragraph';
+
+export default ({ editor, element }) => {
+    return BubbleMenuPlugin({
+        editor,
+        element,
+        pluginKey,
+        // Customize your floating toolbar to your liking.
+    });
+}
+```
+
+See the [BubbleMenu documentation](https://tiptap.dev/docs/editor/extensions/functionality/bubble-menu) for all available configuration options.
+
 ## Customizing text colors
 
 The rich editor includes a text color tool for styling inline text. By default, it uses the [Tailwind CSS color palette](https://tailwindcss.com/docs/colors). In light mode, the 600 shades are applied to text, and in dark mode, the 400 shades are used.
