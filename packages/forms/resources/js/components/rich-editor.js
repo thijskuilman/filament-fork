@@ -1,5 +1,6 @@
 import { Editor } from '@tiptap/core'
 import getExtensions from './rich-editor/extensions'
+import getCustomBubbleMenuPlugins from './rich-editor/custom-bubble-menu-plugins.js'
 import { Selection } from '@tiptap/pm/state'
 import { BubbleMenuPlugin } from '@tiptap/extension-bubble-menu'
 
