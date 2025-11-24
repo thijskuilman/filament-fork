@@ -35,6 +35,7 @@
                         deleteCustomBlockButtonIconHtml: @js(\Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::Trash, alias: \Filament\Forms\View\FormsIconAlias::COMPONENTS_RICH_EDITOR_PANELS_CUSTOM_BLOCK_DELETE_BUTTON)->toHtml()),
                         editCustomBlockButtonIconHtml: @js(\Filament\Support\generate_icon_html(\Filament\Support\Icons\Heroicon::PencilSquare, alias: \Filament\Forms\View\FormsIconAlias::COMPONENTS_RICH_EDITOR_PANELS_CUSTOM_BLOCK_EDIT_BUTTON)->toHtml()),
                         extensions: @js($getTipTapJsExtensions()),
+                        floatingToolbarExtensions: @js($getFloatingToolbarJsExtensions()),
                         key: @js($key),
                         isDisabled: @js($isDisabled),
                         isLiveDebounced: @js($isLiveDebounced()),
