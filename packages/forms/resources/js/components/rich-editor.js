@@ -108,7 +108,11 @@ export default function richEditorFormComponent({
                         pluginKey: `floatingToolbar::${key}`,
                         shouldShow: ({ editor }) => {
                             if (key === 'paragraph') {
-                                return editor.isFocused && editor.isActive(key) && !editor.state.selection.empty
+                                return (
+                                    editor.isFocused &&
+                                    editor.isActive(key) &&
+                                    !editor.state.selection.empty
+                                )
                             }
 
                             return editor.isFocused && editor.isActive(key)
