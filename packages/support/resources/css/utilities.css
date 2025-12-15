@@ -512,6 +512,10 @@
         margin-top: calc(var(--spacing) * 4);
     }
 
+    p br {
+        margin: 0;
+    }
+
     h1:where(:not(.fi-not-prose, .fi-not-prose *)) {
         font-size: var(--text-xl);
         line-height: calc(28 / 18);
